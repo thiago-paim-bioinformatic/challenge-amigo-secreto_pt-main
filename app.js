@@ -2,11 +2,20 @@
 
 //Variáveis
 let listaAmigosSecretos = [];
-
+let numeroAleatorio = 0;
+let amigoSecreto = "";
 
 function limpaCampo() {
     nomeAmigo = document.querySelector("input");
     nomeAmigo.value = "";
+};
+
+function resetJogo() {
+    lista = document.getElementById("listaAmigos");
+    lista.innerHTML = "";
+    listaAmigosSecretos = [];
+    numeroAleatorio = 0;
+    amigoSecreto = "";
 };
 
 
@@ -44,16 +53,65 @@ function mostraListaAmigos () {
 //     campoTag.appendChild(li);
 // };
 
+
 //Lógica principal
+
+// versão 1: adicionarAmigo() somente executada com o clique no botão 'Adicionar'
 function adicionarAmigo() {
     let testeValidacaoCampo = verificaCampoValido();
     if (testeValidacaoCampo == "valido") {
         let nomeAmigo = document.querySelector("input").value;
         listaAmigosSecretos.push(nomeAmigo);
-        console.log(listaAmigosSecretos); //verifica no console a lista
         mostraListaAmigos();
         limpaCampo();
     } else {
         alert("Por favor, insira um nome válido");
     };
 };
+
+
+
+// //versão 2: adicionarAmigo() é executadacom o clique no botão 'Adicionar' ou pressionando a tecla 'enter'
+// function adicionarAmigo(event) {
+//     let testeValidacaoCampo = verificaCampoValido();
+//     if (testeValidacaoCampo == "valido") {
+//         let nomeAmigo = document.querySelector("input").value;
+//         listaAmigosSecretos.push(nomeAmigo);
+//         mostraListaAmigos();
+//         limpaCampo();
+//     };
+
+// };
+
+// // No event listener do input, usamos o evento 'keyup' em vez de 'keydown'. Isso garante que o valor do input seja atualizado antes de chamarmos a função adicionarAmigo().
+
+
+// let pressEnterInput = document.querySelector("input");
+// pressEnterInput.addEventListener('keyup', function(event) {
+//     if (event.key === "Enter") {
+//         adicionarAmigo(event);
+//     }
+// });
+
+// // Adicionamos um event listener para o botão "Adicionar", chamando a função adicionarAmigo() quando o botão for clicado.
+
+// let buttonAdd = document.querySelector(".button-add");
+// buttonAdd.addEventListener('click', adicionarAmigo);
+
+
+
+function sortearAmigo() {
+    let tamanhoListaAmigos = listaAmigosSecretos.length;
+    if (tamanhoListaAmigos != 0) { //verifica se array não está vazio
+        numeroAleatorio = Math.floor((Math.random() * tamanhoListaAmigos));
+        amigoSecreto = listaAmigosSecretos[numeroAleatorio];
+        imprimeTexto("resultado", `O Amigo secreto sorteado é: ${amigoSecreto}`);
+
+    } else {
+        imprimeTexto("resultado", "Você não adicionou amigos para serem sorteados!");
+    };
+
+    resetJogo(); //limpa campos após o sorteio
+};
+
+
